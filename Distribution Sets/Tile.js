@@ -1,9 +1,11 @@
 function Tile(x, y) {
   this.x = x * tileWidth;
   this.y = y * tileHeight;
+
   this.highlight = false;
+  this.fill = false;
+
   this.value = y * 4 + x;
-  this.leftDistributed = []; 
 }
 
 Tile.prototype.show = function() {
@@ -21,5 +23,5 @@ Tile.prototype.show = function() {
 
 Tile.prototype.hover = function() {
   this.highlight = (mouseX > this.x && mouseX < this.x + tileWidth && mouseY > this.y && mouseY < this.y + tileHeight) ? true : false;
-  return highlight;
+  return this.highlight;
 }

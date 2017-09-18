@@ -1,4 +1,4 @@
-var tiles = new Array(4);
+var matrix;
 var myWidth;
 var myHeight;
 var tileHeight;
@@ -13,37 +13,28 @@ function preload() {
 
 function setup() {
   createCanvas(myWidth, myHeight);
-  for (var i = 0; i < 4; i++) {
-    tiles[i] = new Array(4);
-    for (var j = 0; j < 4; j++) {
-      tiles[i][j] = new Tile(j, i);
-    }
-  }
+  matrix = new Matrix();
 }
 
 function draw() {
   background(51);
-  for (var i = 0; i < 4; i++) {
-    for (var j = 0; j < 4; j++) {
-      if(tiles[i][j].hover()){
-        //go through and highlight all distributed tiles
-      }
-      tiles[i][j].show();
-    }
-  }
+  matrix.show();
 }
 
 function leftDistributions() {
+  var dis = true;
   for (var i = 0; i < 16; i++) {
     for (var j = 0; j < 16; j++) {
-      for (var k = 0; k < 2; k++) {
-        for (var l = 0; l < 2; l++) {
-          for (var m = 0; m < 2; m++) {
-
+      for (var a = 0; a < 2; a++) {
+        for (var b = 0; b < 2; b++) {
+          for (var c = 0; c < 2; c++) {
+            //if(a opp (b + c ) != (a opp b) + (a * c)) set to false;
           }
         }
       }
-      //set i distributive over j 
+      //set i distributive over j
+      dis = true;
     }
+    dis = true; //reset the variable.
   }
 }
