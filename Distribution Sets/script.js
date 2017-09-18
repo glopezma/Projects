@@ -13,10 +13,10 @@ function preload() {
 
 function setup() {
   createCanvas(myWidth, myHeight);
-  createMatrix();
   for (var i = 0; i < 4; i++) {
+    tiles[i] = new Array(4);
     for (var j = 0; j < 4; j++) {
-      tiles[i][j] = new Tile(i, j);
+      tiles[i][j] = new Tile(j, i);
     }
   }
 }
@@ -25,24 +25,25 @@ function draw() {
   background(51);
   for (var i = 0; i < 4; i++) {
     for (var j = 0; j < 4; j++) {
-      tiles[i][j].hover();
+      if(tiles[i][j].hover()){
+        //go through and highlight all distributed tiles
+      }
       tiles[i][j].show();
     }
   }
 }
 
 function leftDistributions() {
-  for (var i = 0; i < 2; i++) {
-    for (var j = 0; j < 2; j++) {
+  for (var i = 0; i < 16; i++) {
+    for (var j = 0; j < 16; j++) {
       for (var k = 0; k < 2; k++) {
-        //something
-      }
-    }
-  }
-}
+        for (var l = 0; l < 2; l++) {
+          for (var m = 0; m < 2; m++) {
 
-function createMatrix() {
-  for (var i = 0; i < tiles.length; i++) {
-    tiles[i] = new Array(4);
+          }
+        }
+      }
+      //set i distributive over j 
+    }
   }
 }
