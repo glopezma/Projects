@@ -1,0 +1,174 @@
+// Author: Gabriel Lopez
+// Program: Checkers
+// Date: 9/12/2017
+// Description: This is checkers, the game we all grew up playing as kids!
+
+Tile[][] board;
+
+ArrayList<Move> moveList;
+PVector cell = new PVector();
+
+int boardSize = 800;
+int tileSize = boardSize/8;
+int rows = boardSize/tileSize;
+int cols = boardSize/tileSize;
+
+color grey = color(200, 200, 200);
+color red = color(255, 0, 0);
+color black = color(0);
+color white = color(255);
+color moveColor;
+
+boolean turn = true; //starts grey;
+boolean moveFrom = false;
+
+void setup() {
+  size(800, 800);
+  board = new Tile[cols][rows];
+  moveList = new ArrayList<Move>(); 
+  boardSetup();
+}
+
+void draw() {
+  background(51);
+  moveColor = (turn)? grey: red;
+  for (int i = 0; i<cols; i++) {
+    for (int j = 0; j<rows; j++) {
+      board[i][j].jumpSwitch = (hasJump(board[i][j].x, board[i][j].y))? true : false; 
+      board[i][j].show();
+    }
+  }
+}
+
+void mousePressed() {
+  for (int i = 0; i<cols; i++) {
+    for (int j = 0; j<rows; j++) {
+      if (!moveFrom && board[i][j].pColor == moveColor && board[i][j].occupied && mouseX > board[i][j].x*tileSize && mouseX < board[i][j].x*tileSize+ tileSize && mouseY > board[i][j].y*tileSize && mouseY < board[i][j].y*tileSize+tileSize) {
+        cell.x = j;
+        cell.y = i;
+        moveFrom = true;
+        board[i][j].highlight = true;
+      } else if (moveFrom && mouseX > board[i][j].x*tileSize && mouseX < board[i][j].x*tileSize+ tileSize && mouseY > board[i][j].y*tileSize && mouseY < board[i][j].y*tileSize+tileSize) {
+        if (!board[i][j].occupied && legal(cell, i, j)) {
+          move(cell, i, j);
+          turn = (turn)? false:true; //toggles it
+        }
+        if (board[i][j].pColor == grey && board[i][j].y == 0 || board[i][j].pColor == red && board[i][j].y == 7) {
+          board[i][j].isKing = true; //move king over
+        }
+        moveFrom = false;
+        board[int(cell.y)][int(cell.x)].highlight = false;
+      }
+    }
+  }
+}
+
+//For all peices, check this and then make make player choose from there
+boolean hasJump(int x, int y) {
+  boolean returnStatement = false;
+  color jumpColor = (board[y][x].pColor == grey)? red : grey;
+  if (jumpColor == moveColor) {
+    return returnStatement;
+  }
+  int bound = (board[y][x].pColor == grey)? 0 : 7; 
+  int dir = (board[y][x].pColor == grey)? -1: 1; 
+
+  if (x + 2 < 8 && abs(y-bound) > 1 && board[y+dir*1][x+1].occupied && board[y+dir*1][x+1].pColor == jumpColor && !board[y+dir*2][x+2].occupied) {//jump right
+    returnStatement = true;
+    addMove(y, x, y+2*dir, x+2);
+  } 
+  if (x - 2 >= 0 && abs(y-bound) > 1 && board[y+dir*1][x-1].occupied && board[y+dir*1][x-1].pColor == jumpColor && !board[y+dir*2][x-2].occupied) {//jump left
+    returnStatement = true;
+    addMove(y, x, y+2*dir, x-2);
+  }
+  if (board[y][x].isKing) {
+    if (x + 2 < 8 && abs(y-bound) > 1 && board[y+dir*-1][x+1].occupied && board[y+dir*-1][x+1].pColor == jumpColor && !board[y+dir*-2][x+2].occupied) {//jump right
+      returnStatement = true;
+      addMove(y, x, y+dir*-2, x+2);
+    } 
+    if (x - 2 >= 0 && abs(y-bound) > 1 && board[y+dir*-1][x-1].occupied && board[y+dir*-1][x-1].pColor == jumpColor && !board[y+dir*-2][x-2].occupied) {//jump left
+      returnStatement = true;
+      addMove(y, x, y+dir*-2, x-2);
+    }
+  }
+  return returnStatement;
+}
+
+void addMove(int y, int x, int newY, int newX) {
+  moveList.add(new Move());
+  moveList.get(moveList.size()-1).start = new PVector(x, y);
+  moveList.get(moveList.size()-1).end.add(new PVector(newX, newY));
+}
+
+boolean legal(PVector myCell, int y, int x) {
+  if (moveList.size() == 0 ) {
+    return legalMove(myCell, y, x);
+  }
+  makeJump(); 
+  return true;
+}
+
+void makeJump() {
+  // check to see if move is in moveList
+  // carry out move
+}
+
+//will call all the functions during the computer's turn
+//everything returns bool, so I can add points easily
+int eval() {
+  return 0;
+}
+
+/************************** Finished Line *********************************/
+
+//if there isn't a jump that has to be made, we just move
+//and this is the function to do so. 
+boolean legalMove(PVector myCell, int y, int x) {
+  if (!board[int(myCell.y)][int(myCell.x)].isKing) {
+    int dir = (board[int(myCell.y)][int(myCell.x)].pColor == red)? -1: 1; 
+    return (abs(board[int(myCell.y)][int(myCell.x)].x - x) == 1 && board[int(myCell.y)][int(myCell.x)].y - y == 1*dir);
+  }
+  return (abs(board[int(myCell.y)][int(myCell.x)].x - x) == 1 && abs(board[int(myCell.y)][int(myCell.x)].y - y) == 1);
+}
+
+void move(PVector fromCell, int y, int x) {
+  board[int(y)][int(x)].occupied = true;
+  board[int(fromCell.y)][int(fromCell.x)].occupied = false;
+  board[int(y)][int(x)].pColor = board[int(fromCell.y)][int(fromCell.x)].pColor;
+  board[int(y)][int(x)].isKing = board[int(fromCell.y)][int(fromCell.x)].isKing; 
+  board[int(fromCell.y)][int(fromCell.x)].isKing = false;
+}
+
+void boardSetup() {
+  color peiceColor = red; 
+  boolean visible = false; 
+  for (int i = 0; i<cols; i++) {
+    for (int j = 0; j<rows; j++) {
+      peiceColor = (i>4)? grey: red; 
+      if (i < 3 || i > 4) { 
+        if (j!=0) {
+          visible = (visible)? false: true;
+        }
+        if (i==5 && j==0) {
+          visible = true;
+        }
+      } else {
+        visible = false;
+      }
+      if (i%2 == 0) {
+        if (j%2 == 1) {
+          //new Tile(x, y, occupied, boardColor, PeiceColor);
+          board[i][j] = new Tile(j, i, visible, black, peiceColor);
+        } else {
+          board[i][j] = new Tile(j, i, visible, white, peiceColor);
+        }
+      } else {
+        if (j%2 == 0) {
+          board[i][j] = new Tile(j, i, visible, black, peiceColor);
+        } else {
+          board[i][j] = new Tile(j, i, visible, white, peiceColor);
+        }
+      }
+    }
+  }
+}
