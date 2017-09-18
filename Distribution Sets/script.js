@@ -19,6 +19,7 @@ function setup() {
 
 function draw() {
   background(51);
+  matrix.highlight();
   matrix.show();
 }
 
@@ -38,7 +39,6 @@ function leftDistributions() {
       matrix.tiles[int(i/4)][i%4].fillTable[j] = dis;
       dis = true;
     }
-    dis = true; //reset the variable.
   }
 }
 
@@ -47,5 +47,8 @@ function eval(val1, opp, val2) {
   var val2BinaryString = parseInt(val2).toString(2);
   var lookup = parseInt(val1BinaryString + val2BinaryString, 2);
   var oppBinary = parseInt(opp, 10).toString(2);
+  while(oppBinary.length < 4){
+    oppBinary = "0"+oppBinary; 
+  }
   return int(oppBinary.charAt(oppBinary.length - 1 - lookup));
 }

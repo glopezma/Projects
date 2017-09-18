@@ -16,6 +16,9 @@ function Tile(x, y) {
 Tile.prototype.show = function() {
   noStroke();
   fill(200);
+  if(this.fill){
+    fill(255, 255, 0); 
+  }
   if (this.highlight) {
     stroke(255, 0, 0);
     strokeWeight(2.5);
