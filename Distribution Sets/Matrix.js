@@ -1,7 +1,9 @@
 function Matrix() {
   this.x;
   this.y;
+
   this.tiles = new Array(4);
+
   for (var i = 0; i < 4; i++) {
     this.tiles[i] = new Array(4);
     for (var j = 0; j < 4; j++) {

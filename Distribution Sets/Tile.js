@@ -6,6 +6,11 @@ function Tile(x, y) {
   this.fill = false;
 
   this.value = y * 4 + x;
+
+  this.fillTable = [16];
+  for (var i = 0; i < 16; i++) {
+    this.fillTable[i] = false;
+  }
 }
 
 Tile.prototype.show = function() {
@@ -18,6 +23,7 @@ Tile.prototype.show = function() {
   rect(this.x, this.y, tileWidth, tileHeight);
   stroke(0);
   strokeWeight(2.5);
+  textSize(24);
   text(this.value, this.x + tileWidth / 2, this.y + tileHeight / 2);
 }
 
