@@ -2,6 +2,8 @@ function Tile(x, y) {
   this.x = x * tileWidth;
   this.y = y * tileHeight;
 
+  this.count = 0;
+
   this.highlight = false;
   this.fill = false;
 

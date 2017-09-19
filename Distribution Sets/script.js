@@ -30,16 +30,17 @@ function mouseClicked(){
     for(var j = 0; j < 4; j++){
       for(var k = 0; k < 16; k++){
         matrix.tiles[i][j].fillTable[k] = false;
+        matrix.tiles[i][j].count = 0;
       }
     }
   }
   if(flag){
     leftDistributionsIn();
-    document.getElementById("header").innerHTML = "Inset"
+    document.getElementById("header").innerHTML = "Inset";
   }
   else{
     leftDistributionsOut();
-    document.getElementById("header").innerHTML = "Outset"
+    document.getElementById("header").innerHTML = "Outset";
   }
 }
 
@@ -57,6 +58,7 @@ function leftDistributionsIn() {
         }
       }
       matrix.tiles[int(i/4)][i%4].fillTable[j] = dis;
+      matrix.tiles[int(i/4)][i%4].count += (matrix.tiles[int(i/4)][i%4].fillTable[j])? 1:0;
       dis = true;
     }
   }
@@ -76,6 +78,7 @@ function leftDistributionsOut() {
         }
       }
       matrix.tiles[int(j/4)][j%4].fillTable[i] = dis;
+      matrix.tiles[int(j/4)][j%4].count += (matrix.tiles[int(j/4)][j%4].fillTable[i])? 1:0;
       dis = true;
     }
   }
