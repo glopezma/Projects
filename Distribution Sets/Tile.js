@@ -17,7 +17,12 @@ Tile.prototype.show = function() {
   noStroke();
   fill(200);
   if(this.fill){
-    fill(255, 255, 0); 
+    if(flag){
+      fill(255, 255, 0);
+    }
+    else{
+      fill(135, 206, 250);
+    }
   }
   if (this.highlight) {
     stroke(255, 0, 0);
