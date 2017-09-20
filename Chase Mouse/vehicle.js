@@ -5,7 +5,7 @@ function Vehicle(x, y) {
 
   this.r = 6;
   this.maxSpeed = 4;
-  this.maxForce = 0.1;
+  this.maxForce = 0.3;
   this.vel.setMag(this.maxSpeed);
 }
 
@@ -21,6 +21,8 @@ Vehicle.prototype.update = function() {
 }
 
 Vehicle.prototype.seek = function(target) {
+  this.maxSpeed = map(p5.Vector.dist(target, this.pos), 0, 750, 0.0, 10.0);
+  this.maxForce = map(p5.Vector.dist(target, this.pos), 0, 750, 0.0, 1);
   var desired = p5.Vector.sub(target, this.pos); // A vector pointing from the position to the target
   desired.setMag(this.maxSpeed);
   var steer = p5.Vector.sub(desired, this.vel);

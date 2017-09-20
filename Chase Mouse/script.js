@@ -3,9 +3,9 @@ var width;
 var height;
 
 function setup(){
-  createCanvas(640, 360);
-  v = new Vehicle(640/2, 360/2);
-  console.log(v); 
+  createCanvas(windowWidth-50, windowHeight-25);
+  v = new Vehicle((windowWidth-50)/2, (windowHeight-25)/2);
+  console.log(v);
 }
 
 function draw(){
