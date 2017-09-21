@@ -13,6 +13,23 @@ function draw() {
   let min = minute();
   let sec = second();
 
+  push();
+  fill(255);
+  rotate(90);
+  noStroke();
+  textSize(25);
+  if(sec < 10){
+    sec = "0"+sec;
+  }
+  if(min < 10){
+    min = "0"+min;
+  }
+  if(hr < 10){
+      hr = "0"+hr;
+  }
+  text(hr + ":" + min + ":" + sec, -50, 50);
+  pop();
+
   noFill();
   strokeWeight(8);
   stroke(255, 100, 150);
@@ -44,21 +61,4 @@ function draw() {
 
   stroke(255);
   point(0, 0);
-
-  push();
-  fill(255);
-  rotate(90);
-  noStroke();
-  textSize(25);
-  if(sec < 10){
-    sec = "0"+sec;
-  }
-  if(min < 10){
-    min = "0"+min;
-  }
-  if(hr < 10){
-      hr = "0"+hr;
-  }
-  text(hr + ":" + min + ":" + sec, -50, 50);
-  pop();
 }
