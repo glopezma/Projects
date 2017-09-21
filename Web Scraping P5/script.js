@@ -1,4 +1,3 @@
-var button;
 var page;
 var movies;
 var percents;
@@ -17,8 +16,7 @@ function preload() {
 
 function setup() {
   noCanvas();
-
-  button = createButton('Order List');
+  noLoop();
 
   page = join(page, "\n");
   movies = page.match(patts[0]);
@@ -32,16 +30,8 @@ function setup() {
     movies[i] = movies[i].match(patts[1])[0];
     movies[i] = movies[i].slice(1, movies[i].length - 1);
     myMovies.push(new Movie(movies[i], percents[i * 2], percents[i * 2 + 1]));
-    myP.push(createP(myMovies[i].title + " -- " + myMovies[i].critic + " -- " + myMovies[i].user));
   }
-
-    button.mousePressed(order);
-}
-
-function draw(){
-  for(var i = 0; i < movies.length; i++){
-    myP[i] = createP(myMovies[i].title + " -- " + myMovies[i].critic + " -- " + myMovies[i].user);
-  }
+    order();
 }
 
 function Movie(title, critic, user) {
@@ -51,8 +41,11 @@ function Movie(title, critic, user) {
 }
 
 function order(){
-  myMovies = myMovies.sort(function(a, b){return a.critic-b.critic});
+  myMovies = myMovies.sort(function(a, b){return b.critic-a.critic});
   for(var i = 0; i < myMovies.length; i++){
-    myP[i] = createP(myMovies[i].title + " -- " + myMovies[i].critic + " -- " + myMovies[i].user)
+    myP.push(createP(myMovies[i].title));
+    myP[i*2].style('font-weight: bold;');
+    myP.push(createP("Critics: "+ myMovies[i].critic + " Users: " + myMovies[i].user+"<br><br>"));
+    myP[i*2+1].style('font-weight: normal;');
   }
 }
