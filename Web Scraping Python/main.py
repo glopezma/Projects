@@ -1,7 +1,6 @@
 import bs4, requests
-
-url = 'http://nostarch.com'
-res = requests.get(url)
-res.raise_for_status()
-noStarchSoup = bs4.BeautifulSoup(res.text)
-type(noStarchSoup)
+exampleFile = open('Top Movies - Top Box Office _ Rotten Tomatoes.html')
+exampleSoup = bs4.BeautifulSoup(exampleFile.read(), "lxml")
+elems = exampleSoup.select('.unstyled articleLink')
+for m in elems:
+    print(m)

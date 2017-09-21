@@ -1,4 +1,4 @@
-var covCalc; 
+var covCalc;
 var PDFString;
 var table = [];
 var coord = [];
