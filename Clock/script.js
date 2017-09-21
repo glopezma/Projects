@@ -32,14 +32,17 @@ function draw() {
   rotate(90);
   noStroke();
   textSize(25);
-  if (sec < 10) {
-    sec = "0" + sec;
+  if (dsec < 10) {
+    dsec = "0" + dsec;
   }
-  if (min < 10) {
-    min = "0" + min;
+  if (dmin < 10) {
+    dmin = "0" + dmin;
   }
-  if (hr < 10) {
-    hr = "0" + hr;
+  if (dhr == 0) {
+    dhr = "00";
+  }
+  else if (dhr < 10) {
+    dhr = "0" + dhr;
   }
   text(dhr + ":" + dmin + ":" + dsec,  -50, 50);
   pop();
