@@ -10,7 +10,7 @@ PVector cell = new PVector();  //Current move
 
 color grey = color(200, 200, 200);
 color red = color(255, 0, 0);
-color black = color(0);
+color black = color(0); 
 color white = color(255);
 
 int boardSize = 800;
