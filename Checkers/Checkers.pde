@@ -49,7 +49,7 @@ void draw() {
     }
   } else {
     textSize(50);
-    fill(moveColor); 
+    fill(moveColor);
     String winnerString = (moveColor == red)? "red": "grey";
     text(winnerString+" Wins!!!", width/2.5, height/4);
     text("push space to restart", 175, height/4 + 100);
