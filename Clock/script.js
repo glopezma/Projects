@@ -38,11 +38,11 @@ function draw() {
   if (dmin < 10) {
     dmin = "0" + dmin;
   }
-  if (dhr == 0) {
-    dhr = "00";
+  if (dhr % 12 == 0) {
+    dhr = "12";
   }
-  else if (dhr < 10) {
-    dhr = "0" + dhr;
+  else if ((dhr % 12) < 10) {
+    dhr = "0" + (dhr % 12);
   }
   text(dhr + ":" + dmin + ":" + dsec,  -50, 50);
   pop();
