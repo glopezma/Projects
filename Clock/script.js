@@ -20,9 +20,11 @@ function draw() {
   let min = d.getMinutes();
   let sec = d.getSeconds();
   let mill = d.getMilliseconds();
+
   let dhr = hr;
   let dmin = min;
   let dsec = sec;
+
   sec += mill/1000;
   min += sec/60;
   hr += min/60;
