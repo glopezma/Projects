@@ -14,10 +14,18 @@ function draw() {
 
   translate(width/2, height/2);
   rotate(-90);
+  let d = new Date();
 
-  let hr = hour();
-  let min = minute();
-  let sec = second();
+  let hr = d.getHours();
+  let min = d.getMinutes();
+  let sec = d.getSeconds();
+  let mill = d.getMilliseconds();
+  let dhr = hr;
+  let dmin = min;
+  let dsec = sec;
+  sec += mill/1000;
+  min += sec/60;
+  hr += min/60;
 
   push();
   fill(255);
@@ -33,7 +41,7 @@ function draw() {
   if (hr < 10) {
     hr = "0" + hr;
   }
-  text(hr + ":" + min + ":" + sec, -50, 50);
+  text(dhr + ":" + dmin + ":" + dsec,  -50, 50);
   pop();
 
   noFill();
