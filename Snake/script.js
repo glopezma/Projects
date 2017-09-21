@@ -124,5 +124,5 @@ function snakeCollision() {
 }
 
 function outOfBounds(){
-  return !(head.x < width && head.x > 0 && head.y > 0 && head.y < height);
+  return !(head.x < width && head.x >= 0 && head.y >= 0 && head.y < height);
 }
