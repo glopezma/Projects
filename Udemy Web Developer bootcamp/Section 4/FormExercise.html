@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>Form Exercise</title>
+</head>
+<style media="screen">
+  body {
+    font-weight: bold;
+  }
+</style>
+
+<body>
+  <h1>Register</h1>
+
+  <form>
+    <div>
+      <label>
+          First Name:
+          <input type="text" name="fname" placeholder="Hermione" required>
+      </label>
+
+      <label>
+        Last Name:
+        <input type="text" name="lname" placeholder="Granger" required>
+      </label>
+    </div>
+
+    <div>
+      <label>
+        Male
+        <input type="radio" name="gender" value="">
+      </label>
+      <label>
+        Female
+        <input type="radio" name="gender" value="">
+      </label>
+      <label>
+        Other
+        <input type="radio" name="gender" value="">
+      </label>
+    </div>
+
+    <div>
+      <label>
+        Email:
+        <input type="email" name="email" value="" placeholder="hermione@gmail.com" required>
+      </label>
+      <label>
+        Password:
+        <input type="password" name="password" placeholder="Password" value="" pattern=".{5, 10}" required>
+      </label>
+    </div>
+
+    <div>
+      <label>
+        Birthday:
+        <select class="" name="Month">
+          <option value="">Month</option>
+        </select>
+        <select class="" name="Day">
+          <option value="">Day</option>
+        </select>
+        <select class="" name="Year">
+          <option value="">Year</option>
+        </select>
+      </label>
+    </div>
+
+    <div>
+      <label>
+        I Agree to the terms and conditions
+        <input type="checkbox" name="" value="">
+      </label><br>
+      <input type="submit" name="" value="Submit">
+    </div>
+  </form>
+</body>
+
+</html>
+
+
+<!-- rpd -->
