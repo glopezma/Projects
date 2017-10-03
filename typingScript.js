@@ -6,3 +6,6 @@ function myFunction(){
   var myElement = document.getElementsByClassName("highlight")[0].innerHTML;
   input.value = myElement;
 }
+
+
+//http://www.oracle.com/webfolder/technetwork/tutorials/obe/fmw/bi/bi11117/rpd/rpd.html
