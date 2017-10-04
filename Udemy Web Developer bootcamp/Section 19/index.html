@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title></title>
+  <script type="text/javascript" src="assets/js/lib/paper-full.js"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.0.4/howler.js" charset="utf-8"></script>
+  <script type="text/paperscript" canvas="myCanvas">
+  var circles = [];
+  var sounds = new Howl({
+    src: ['assets/sounds/bubbles.mp3']
+  });
+
+  function onKeyDown(event) {
+    var ranPoint = new Point(Math.floor(Math.random() * view.size.width), Math.floor(Math.random() * view.size.height));
+    var newCircle = new Path.Circle(ranPoint, 100);
+    newCircle.fillColor = "orange"
+    circles.push(newCircle);
+    sounds.play();
+  }
+
+  function onFrame(event) {
+    for(var i = 0; i < circles.length; i++){
+      // if(circles[i]){
+      //   cirlces.shift();
+      // }
+      circles[i].fillColor.hue += 1;
+      circles[i].scale(.9);
+    }
+  }
+
+  </script>
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+
+<body>
+  <canvas id="myCanvas" resize></canvas>
+</body>
+
+</html>
+
+
+<!-- var myCircles = [10];
+for(var i = 0; i < 10; i++){
+  myCircles[i] = [10];
+  for(var j = 0; j < 10; j++){
+    myCircles[i][j] = new Path.Circle(new Point(j*100 + 100, i*75 + 100), 20);
+    myCircles[i][j].fillColor = "rgb("+(i+j)*15+", 255, 255)";
+  }
+} -->

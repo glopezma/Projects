@@ -1,3 +1,9 @@
+// function startup(){
+//   for(var i = 0; i < document.cookie.length; i++){
+//     $("ul").append("<li><span><i class=\'fa fa-trash\'></i></span> " + document.cookie[i] + "</li>");
+//   }
+// }
+
 $("ul").on("click", "li", function() {
   $(this).toggleClass("completed");
 });
@@ -17,5 +23,5 @@ $("input[type='text']").on("keypress", function(e) {
 });
 
 $(".fa-plus").on("click", function(){
-  $("input[type='text']").fadeToggle(); 
+  $("input[type='text']").fadeToggle();
 });
