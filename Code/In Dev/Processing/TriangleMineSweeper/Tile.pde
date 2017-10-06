@@ -1,58 +1,45 @@
 class Tile {
-  PVector p1;   
+  //3 points of the triangle
+  PVector p1;     
   PVector p2;
   PVector p3; 
 
-  int counter; 
+  int counter;      // How many bombs are next to tile 
+
   boolean red;      // draw square as red
   boolean visited;  // used during the flipping multiple things
   boolean space;    // shows whether a bomb oready there or not
   boolean check;    // shows what's hiding
   boolean mine;     // whether it has a mine or not
+  boolean up;       // which direction the triangle is facing
 
-  Tile(PVector a, PVector b, PVector c) {
-    p1 = a; 
-    p2 = b;
-    p3 = c; 
-    
+  Tile(PVector a, PVector b, PVector c, boolean dir) {
+    p1 = a.copy(); 
+    p2 = b.copy();
+    p3 = c.copy(); 
+
     counter = 0; 
     red = false;
     visited = false; 
     space = false;
     check = false; 
-    mine = false; 
-  }
-
-  void setMine() {
     mine = true;
+    up = dir;
   }
 
-  void reset() {
-    visited = false; 
-    check = false;
-    mine = false;
-    space = false;
-    red = false;
-    counter = 0;
-  }
-
-  void show(int tileSize) {
-    if (!check) {
-      if (red) {
-        fill(255, 0, 0);
-      } else {
-        fill(200);
-      }
-    } else {
-      fill(255);
-    }
-
-    //rectMode(CENTER);
-    triangle(p1.x, p1.y, p2.x, p2.y, p3.x, p3.y); 
-    if (check) { 
+  void show() {
+    int tileSize = int(p3.x - p1.x); 
+    stroke(0); 
+    strokeWeight(1);
+    if (red) {
+      fill(255, 0, 0);
+      triangle(p1.x, p1.y, p2.x, p2.y, p3.x, p3.y);
+    } else if (check) {
+      fill(255); 
+      triangle(p1.x, p1.y, p2.x, p2.y, p3.x, p3.y);
       if (mine) { 
         fill(51);
-        ellipse(p1.x+tileSize/2, p1.y+tileSize/2, tileSize/4, tileSize/4);
+        ellipse(p2.x - 2, (p1.y + p2.y + p3.y)/3, tileSize/4, tileSize/4);
       } else {
         if (counter == 0) {
           fill(255);
@@ -67,8 +54,40 @@ class Tile {
         } else if (counter > 4) {
           fill(255, 0, 0);
         }
-        text(counter, p1.x+tileSize/2-2, p1.y+tileSize/2+2);
+        text(counter, p2.x - 2, (p1.y + p2.y + p3.y)/3);
       }
+    } else {
+      fill(175);
+      triangle(p1.x, p1.y, p2.x, p2.y, p3.x, p3.y);
     }
+  }
+
+  void cover() {
+    if (PointInTriangle(mouse, p1, p2, p3) && !check) {
+      red = !red;
+    }
+  }
+
+  void click() {
+    if (!red && !check && PointInTriangle(mouse, p1, p2, p3)) {
+      check = true;
+    }
+  }
+
+  private boolean PointInTriangle(PVector p, PVector p1, PVector p2, PVector p3) {
+    float alpha = ((p2.y - p3.y)*(p.x - p3.x) + (p3.x - p2.x)*(p.y - p3.y)) / ((p2.y - p3.y)*(p1.x - p3.x) + (p3.x - p2.x)*(p1.y - p3.y));
+    float beta = ((p3.y - p1.y)*(p.x - p3.x) + (p1.x - p3.x)*(p.y - p3.y)) / ((p2.y - p3.y)*(p1.x - p3.x) + (p3.x - p2.x)*(p1.y - p3.y));
+    float gamma = 1.0 - alpha - beta;
+
+    return (alpha > 0 && beta > 0 && gamma > 0);
+  }
+
+  void reset() {
+    visited = false; 
+    check = false;
+    mine = false;
+    space = false;
+    red = false;
+    counter = 0;
   }
 }

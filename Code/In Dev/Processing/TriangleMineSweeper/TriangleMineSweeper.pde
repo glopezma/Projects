@@ -1,27 +1,21 @@
 // Gabriel Lopez
 // Triangle Mine Sweeper made from processing
-// Sep 29, 2017
-
-// Every time you win the game, it'll send a congradulations and
-// make it a little harder for the next game. 
+// Oct 6, 2017
 
 Board board; 
+PVector mouse; 
 
 void setup() {
   size(560, 560);
-  board = new Board(); 
+  board = new Board();
+  mouse = new PVector(mouseX, mouseY); 
 }
-
 
 void draw() {
-  background(255);
-  if (!board.win()) {
-    board.showPlay(); 
-  } else {
-    board.showEnd(); 
-  }
+  background(51);
+  mouse.set(mouseX, mouseY); 
+  board.show(); 
 }
-
 
 void mousePressed() {
   board.action(); 
