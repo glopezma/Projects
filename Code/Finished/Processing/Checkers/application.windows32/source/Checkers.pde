@@ -8,6 +8,11 @@ Tile[][] board;      //The board we play on
 ArrayList<Move> jumpList;      //all available moves
 PVector cell = new PVector();  //Current move
 
+color grey = color(200, 200, 200);
+color red = color(255, 0, 0);
+color black = color(0); 
+color white = color(255);
+
 int boardSize = 800;
 int tileSize = boardSize/8;
 int rows = boardSize/tileSize;
@@ -44,7 +49,7 @@ void draw() {
     }
   } else {
     textSize(50);
-    fill(moveColor); 
+    fill(moveColor);
     String winnerString = (moveColor == red)? "red": "grey";
     text(winnerString+" Wins!!!", width/2.5, height/4);
     text("push space to restart", 175, height/4 + 100);

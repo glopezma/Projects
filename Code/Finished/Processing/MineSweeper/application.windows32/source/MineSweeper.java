@@ -268,7 +268,7 @@ class Tile {
 }
   public void settings() {  size(600, 600); }
   static public void main(String[] passedArgs) {
-    String[] appletArgs = new String[] { "MineSweeper" };
+    String[] appletArgs = new String[] { "--present", "--window-color=#666666", "--stop-color=#cccccc", "MineSweeper" };
     if (passedArgs != null) {
       PApplet.main(concat(appletArgs, passedArgs));
     } else {
