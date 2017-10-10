@@ -37,9 +37,9 @@ class Board {
 
   void show() {
     if (!win()) {
-      board.showPlay();
+      showPlay();
     } else {
-      board.showEnd();
+      showEnd();
     }
   }
 
@@ -98,12 +98,12 @@ class Board {
     //set the mines for the board
     while (count<numMines) {
       ran = int(random(0, boardHeight * boardWidth));
-      if (ran < boardWidth*boardWidth && !tiles[ran/boardWidth][ran % boardWidth].space) {
+      if (ran < boardHeight*boardWidth && !tiles[ran/boardWidth][ran % boardWidth].space) {
         int i = ran/boardWidth;
         int j = ran % boardWidth;
         tiles[i][j].space = true;
         tiles[i][j].mine = true;
-        //println("Mine: " + i + " " + j); 
+        //println("Mine: " + i + " " + j);
 
         if (j-1 >= 0) { //left
           if (i-1 >= 0) { //left top
