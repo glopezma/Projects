@@ -23,8 +23,17 @@ class Tile {
     visited = false; 
     space = false;
     check = false; 
-    mine = true;
+    mine = false;
     up = dir;
+  }
+
+  void reset() {
+    visited = false; 
+    check = false;
+    mine = false;
+    space = false;
+    red = false;
+    counter = 0;
   }
 
   void show() {
@@ -68,10 +77,12 @@ class Tile {
     }
   }
 
-  void click() {
+  boolean click() {
     if (!red && !check && PointInTriangle(mouse, p1, p2, p3)) {
       check = true;
+      return (mine || counter==0);
     }
+    return false;
   }
 
   private boolean PointInTriangle(PVector p, PVector p1, PVector p2, PVector p3) {
@@ -80,14 +91,5 @@ class Tile {
     float gamma = 1.0 - alpha - beta;
 
     return (alpha > 0 && beta > 0 && gamma > 0);
-  }
-
-  void reset() {
-    visited = false; 
-    check = false;
-    mine = false;
-    space = false;
-    red = false;
-    counter = 0;
   }
 }

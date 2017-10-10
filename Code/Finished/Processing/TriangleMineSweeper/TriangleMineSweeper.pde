@@ -3,10 +3,10 @@
 // Oct 6, 2017
 
 Board board; 
-PVector mouse; 
+PVector mouse; //In theory this should be in the game class. 
 
 void setup() {
-  size(560, 560);
+  size(640, 640);
   board = new Board();
   mouse = new PVector(mouseX, mouseY); 
 }
