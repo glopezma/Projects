@@ -17,7 +17,7 @@ function Tile(a, b, c, dir) {
   this.up = dir;
 }
 
-Tile.prototype.reset = function() {
+Tile.prototype.resetTile = function() {
   this.counter = 0;
   this.red = false;
   this.visited = false;
@@ -53,7 +53,8 @@ Tile.prototype.show = function() {
       } else if (this.counter > 4) {
         fill(255, 0, 0);
       }
-      text(this.counter, p2.x - 2, (p1.y + p2.y + p3.y) / 3);
+      noStroke(); 
+      text(this.counter, this.p2.x - 2, (this.p1.y + this.p2.y + this.p3.y) / 3);
     }
   } else {
     fill(175);
@@ -62,13 +63,13 @@ Tile.prototype.show = function() {
 }
 
 Tile.prototype.cover = function() {
-  if(PointInTriangle(this.mouse, this.p1, this.p2, this.p3) && !this.check) {
+  if (PointInTriangle(mouse, this.p1, this.p2, this.p3) && !this.check) {
     this.red = !this.red;
   }
 }
 
 Tile.prototype.click = function() {
-  if(!this.red && !this.check && PointInTriangle(this.mouse, this.p1, this.p2, this.p3)) {
+  if (!this.red && !this.check && PointInTriangle(mouse, this.p1, this.p2, this.p3)) {
     this.check = true;
     return (this.mine || this.counter == 0);
   }
@@ -76,8 +77,8 @@ Tile.prototype.click = function() {
 }
 
 function PointInTriangle(p, p1, p2, p3) {
-  var alpha = ((p2.y - p3.y)*(p.x - p3.x) + (p3.x - p2.x)*(p.y - p3.y)) / ((p2.y - p3.y)*(p1.x - p3.x) + (p3.x - p2.x)*(p1.y - p3.y));
-  var beta = ((p3.y - p1.y)*(p.x - p3.x) + (p1.x - p3.x)*(p.y - p3.y)) / ((p2.y - p3.y)*(p1.x - p3.x) + (p3.x - p2.x)*(p1.y - p3.y));
+  var alpha = ((p2.y - p3.y) * (p.x - p3.x) + (p3.x - p2.x) * (p.y - p3.y)) / ((p2.y - p3.y) * (p1.x - p3.x) + (p3.x - p2.x) * (p1.y - p3.y));
+  var beta = ((p3.y - p1.y) * (p.x - p3.x) + (p1.x - p3.x) * (p.y - p3.y)) / ((p2.y - p3.y) * (p1.x - p3.x) + (p3.x - p2.x) * (p1.y - p3.y));
   var gamma = 1.0 - alpha - beta;
 
   return (alpha > 0 && beta > 0 && gamma > 0);

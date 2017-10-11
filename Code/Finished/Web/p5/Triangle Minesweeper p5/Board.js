@@ -9,10 +9,7 @@ function Board() {
   for (var i = 0; i < this.boardHeight; i++) {
     this.tiles[i] = new Array(this.boardWidth);
   }
-  this.setup();
-}
 
-Board.prototype.setup = function() {
   var a = new p5.Vector(0, 0);
   var b = new p5.Vector(this.tileSize / 2, this.tileSize);
   var c = new p5.Vector(this.tileSize, 0);
@@ -37,12 +34,10 @@ Board.prototype.setup = function() {
       b.set(this.tileSize / 2, b.y + this.tileSize);
     }
   }
-
-  this.resetGame();
 }
 
 Board.prototype.show = function() {
-  if (!win()) {
+  if (!this.win()) {
     this.showPlay();
   } else {
     this.showEnd();
@@ -58,21 +53,23 @@ Board.prototype.showPlay = function() {
 }
 
 Board.prototype.showEnd = function() {
-  if (win() && mouseButton == LEFT) {
-    this.numMines += 5;
-    this.resetGame();
-  } else {
-    for (var i = 0; i < this.boardHeight; i++) {
-      for (var j = 0; j < this.boardWidth; j++) {
-        if (mouseButton == LEFT) {
-          if (tile[i][j].click()) {
+  fill(0, 0, 255);
+  text("Congradulations!", this.boardSize / 3 + 50, this.boardSize / 2)
+}
+
+Board.prototype.action = function() {
+  for (var i = 0; i < this.boardHeight; i++) {
+    for (var j = 0; j < this.boardWidth; j++) {
+      if (mouseButton == LEFT) {
+        if (this.tiles[i][j].click()) {
+          if (this.tiles[i][j].mine) {
             this.resetGame();
           } else {
             this.lookAround(i, j);
           }
-        } else if (mouseButton == RIGHT) {
-          this.tiles[i][j].cover();
         }
+      } else if (mouseButton == RIGHT) {
+        this.tiles[i][j].cover();
       }
     }
   }
@@ -96,10 +93,12 @@ Board.prototype.newGame = function() {
 
   while (count < this.numMines) {
     ran = parseInt(random(this.boardHeight * this.boardWidth));
-    console.log();
-    var i = ran / this.boardWidth;
-    var j = ran % this.boardWidth;
-    if (ran < this.boardWidth * this.boardHeight && !this.tiles[i][j].space) {
+    var i = int(ran / this.boardWidth);
+    var j = (ran % this.boardWidth);
+    // console.log(i + " " + j);
+    if (ran < (this.boardWidth * this.boardHeight) && !this.tiles[i][j].space) {
+      this.tiles[i][j].space = true;
+      this.tiles[i][j].mine = true; 
       if (j - 1 >= 0) { //left
         if (i - 1 >= 0) { //left top
           this.tiles[i - 1][j - 1].counter++;
@@ -152,13 +151,13 @@ Board.prototype.newGame = function() {
 Board.prototype.resetGame = function() {
   for (var i = 0; i < this.boardHeight; i++) {
     for (var j = 0; j < this.boardWidth; j++) {
-      this.tiles[i][j].reset();
+      this.tiles[i][j].resetTile();
     }
   }
   this.newGame();
 }
 
-Board.prototype.lookAround = function() {
+Board.prototype.lookAround = function(i, j) {
   if (!this.tiles[i][j].visited) {
     this.tiles[i][j].visited = true;
     this.tiles[i][j].check = true;
@@ -171,7 +170,7 @@ Board.prototype.lookAround = function() {
           }
         }
         if (i + 1 < this.boardHeight) { //left bottom
-          lookAround(i + 1, j - 1);
+          this.lookAround(i + 1, j - 1);
           if (this.tiles[i][j].up && j - 2 >= 0) { //far left bottom
             this.lookAround(i + 1, j - 2);
           }
