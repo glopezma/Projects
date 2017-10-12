@@ -20,7 +20,6 @@ int numHeight = 86;
 int tileSize = 10;
 int boardWidth = numWidth * tileSize;
 int boardHeight = numHeight * tileSize;
-int animationTimer = millis();
 Pacman pac;
 Board board;
 
@@ -39,32 +38,41 @@ public void draw() {
 
 public void keyPressed() {
   if (keyCode == LEFT) {
-    //println("go left");
+    // int xpos = pac.loc.x; 
+    // if(xpos < 0) {
+    //   xpos = 0;
+    // }
+    // if(xpos >= )
     pac.direction = "left";
     pac.setDir(-1, 0);
   } else if (keyCode == RIGHT) {
-    //println("go right");
     pac.setDir(1, 0);
     pac.direction = "right";
   } else if (keyCode == UP) {
-    //println("go up");
     pac.setDir(0, -1);
     pac.direction = "up";
   } else if (keyCode == DOWN) {
-    //println("go down");
     pac.setDir(0, 1);
-    pac.direction = "down"; 
+    pac.direction = "down";
   }
+}
+
+public boolean inBounds(int x, int y) {
+  return (x >= 0 && x < numWidth && y >= 0 && y < numHeight);
 }
 class Agent {
   PVector loc;
   PVector dir;
-  float speed; 
+  int animationTimer;
+  float speed;
+  String direction;
 
   Agent(int x, int y) {
     loc = new PVector(x, y);
     dir = new PVector(0, 0);
-    speed = 1; 
+    animationTimer = millis();
+    speed = 1;
+    direction = "right"; 
   }
 
   public void setDir(int x, int y) {
@@ -72,7 +80,7 @@ class Agent {
   }
 
   public void move() {
-    loc.add(PVector.mult(dir, speed)); 
+    loc.add(PVector.mult(dir, speed));
   }
 }
 class Board {
@@ -91,14 +99,41 @@ class Board {
   }
 
   public void update() {
-    pac.move();
+    int x;
+    int y;
+    if (pac.direction == "up") {
+      x = PApplet.parseInt(pac.loc.x / tileSize);
+      y = PApplet.parseInt(pac.loc.y / tileSize) - 2;
+      if (inBounds(x, y) && !tiles[y][x].wall) {
+        pac.move();
+      }
+    } else if (pac.direction == "down") {
+      x = PApplet.parseInt(pac.loc.x / tileSize);
+      y = PApplet.parseInt(pac.loc.y / tileSize) + 2;
+      if (inBounds(x, y) && !tiles[y][x].wall) {
+        pac.move();
+      }
+    } else if (pac.direction == "right") {
+      x = PApplet.parseInt(pac.loc.x / tileSize) + 2;
+      y = PApplet.parseInt(pac.loc.y / tileSize);
+      if (inBounds(x, y) && !tiles[y][x].wall) {
+        pac.move();
+      }
+    } else if (pac.direction == "left") {
+      x = PApplet.parseInt(pac.loc.x / tileSize) - 2;
+      y = PApplet.parseInt(pac.loc.y / tileSize);
+      if (inBounds(x, y) && !tiles[y][x].wall) {
+        pac.move();
+      }
+    }
   }
 
+  //called from main
   public void show() {
     int x = 0;
     int y = 0;
-    for (int i = 1; i < numHeight - 1; i++) {
-      for (int j = 1; j < numWidth - 1; j++) {
+    for (int i = 0; i < numHeight; i++) {
+      for (int j = 0; j < numWidth; j++) {
         if (i == PApplet.parseInt(pac.loc.y / tileSize) && j == PApplet.parseInt(pac.loc.x / tileSize)) {
           tiles[i][j].pac = true;
           x = j;
@@ -113,17 +148,18 @@ class Board {
   }
 }
 class Pacman extends Agent {
+  int mouthPos;
+  int diam;
+  boolean mouthClosing;
+
   PVector[] mouthFrame = {
     new PVector(PI/3, 5*PI/3),
     new PVector(PI/4, 7*PI/4),
     new PVector(0, 2*PI)
   };
-  String direction;
-  boolean mouthClosing;
-  int mouthPos;
-  int diam;
+
   Pacman() {
-    super(tileSize * numWidth / 2 - 1, tileSize * numHeight - 3 * tileSize); //hard coded, I know. I'm terrible!
+    super(tileSize * numWidth / 2 - 1, tileSize * numHeight - 3 * tileSize);
     println(tileSize * numWidth / 2 + " " + tileSize * numHeight);
     speed = 3;
     diam = 18;
@@ -131,6 +167,7 @@ class Pacman extends Agent {
     mouthPos = 0;
   }
 
+  //called from Tile class
   public void show(int x, int y) {
     int deg = 0;
     if (direction == "up") {
@@ -152,7 +189,6 @@ class Pacman extends Agent {
   public void mouthAnimation() {
     if (millis() > animationTimer + 75) {
       animationTimer = millis();
-      // mouthPos = (mouthPos == 0)? 1:0;
       mouthPos += (mouthClosing)? 1:-1;
       if (mouthPos <= 0) {
         mouthClosing = true;
@@ -175,13 +211,14 @@ class Tile {
     this.y = y;
     bigFood = false;
     smallFood = false;
-    wall = false;
-    //wall = (this.x == 0 || this.y == 0 || this.x == 30 || this.y == 34)? true:false;
+    // wall = false;
+    wall = (this.x == 0 || this.y == 0 || this.x == (numWidth - 1) * tileSize || this.y == (numHeight - 1) * tileSize)? true:false;
     pac = false;
   }
 
+  //called from board class
   public void show(Pacman pac) {
-    //println("x: " + x + " y: " + y);
+    show();
     if (smallFood) {
       score += 100;
       smallFood = false;
@@ -192,10 +229,10 @@ class Tile {
   public void show() {
     stroke(255, 255, 255, 25);
     strokeWeight(1);
-    int mycolor = (wall)? color(68, 71, 76): color(0, 19, 56);
+    int mycolor = (wall)? color(68, 71, 76, 100): color(0, 19, 56);
     fill(mycolor);
     rect(x, y, tileSize, tileSize);
-    if (smallFood) {
+    if (smallFood && !wall) {
       fill(255, 255, 255);
       ellipse(x + tileSize / 2, y + tileSize / 2, tileSize / 2, tileSize / 2);
     }

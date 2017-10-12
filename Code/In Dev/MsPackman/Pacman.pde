@@ -2,10 +2,10 @@ class Pacman extends Agent {
   int mouthPos;
   int diam;
   boolean mouthClosing;
-  String direction;
+
   PVector[] mouthFrame = {
-    new PVector(PI/3, 5*PI/3), 
-    new PVector(PI/4, 7*PI/4), 
+    new PVector(PI/3, 5*PI/3),
+    new PVector(PI/4, 7*PI/4),
     new PVector(0, 2*PI)
   };
 
@@ -18,6 +18,7 @@ class Pacman extends Agent {
     mouthPos = 0;
   }
 
+  //called from Tile class
   void show(int x, int y) {
     int deg = 0;
     if (direction == "up") {

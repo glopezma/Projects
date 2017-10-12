@@ -14,14 +14,41 @@ class Board {
   }
 
   void update() {
-    pac.move();
+    int x;
+    int y;
+    if (pac.direction == "up") {
+      x = int(pac.loc.x / tileSize);
+      y = int(pac.loc.y / tileSize) - 2;
+      if (inBounds(x, y) && !tiles[y][x].wall) {
+        pac.move();
+      }
+    } else if (pac.direction == "down") {
+      x = int(pac.loc.x / tileSize);
+      y = int(pac.loc.y / tileSize) + 2;
+      if (inBounds(x, y) && !tiles[y][x].wall) {
+        pac.move();
+      }
+    } else if (pac.direction == "right") {
+      x = int(pac.loc.x / tileSize) + 2;
+      y = int(pac.loc.y / tileSize);
+      if (inBounds(x, y) && !tiles[y][x].wall) {
+        pac.move();
+      }
+    } else if (pac.direction == "left") {
+      x = int(pac.loc.x / tileSize) - 2;
+      y = int(pac.loc.y / tileSize);
+      if (inBounds(x, y) && !tiles[y][x].wall) {
+        pac.move();
+      }
+    }
   }
 
+  //called from main
   void show() {
     int x = 0;
     int y = 0;
-    for (int i = 1; i < numHeight - 1; i++) {
-      for (int j = 1; j < numWidth - 1; j++) {
+    for (int i = 0; i < numHeight; i++) {
+      for (int j = 0; j < numWidth; j++) {
         if (i == int(pac.loc.y / tileSize) && j == int(pac.loc.x / tileSize)) {
           tiles[i][j].pac = true;
           x = j;

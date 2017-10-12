@@ -1,12 +1,16 @@
 class Agent {
   PVector loc;
   PVector dir;
-  float speed; 
+  int animationTimer;
+  float speed;
+  String direction;
 
   Agent(int x, int y) {
     loc = new PVector(x, y);
     dir = new PVector(0, 0);
-    speed = 1; 
+    animationTimer = millis();
+    speed = 1;
+    direction = "right"; 
   }
 
   void setDir(int x, int y) {
@@ -14,6 +18,6 @@ class Agent {
   }
 
   void move() {
-    loc.add(PVector.mult(dir, speed)); 
+    loc.add(PVector.mult(dir, speed));
   }
 }
