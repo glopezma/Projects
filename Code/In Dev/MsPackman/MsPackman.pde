@@ -1,28 +1,29 @@
-Pacman pac; 
+Board board; 
 
 void setup() {
-  size(640, 640);
-  smooth(); 
-  pac = new Pacman();
+  size(600, 640);
+  board = new Board(); 
+  smooth();
 }
 
 void draw() {
- background(51);  
- pac.move();
- pac.show(); 
+  background(51);  
+  board.update(); 
+  board.show();
 }
 
 void keyPressed() {
-  if(keyCode == LEFT) {
-    pac.setDir(-1, 0); 
-  }
-  else if(keyCode == RIGHT) {
-    pac.setDir(1, 0); 
-  }
-  else if(keyCode == UP) {
-    pac.setDir(0, -1); 
-  }
-  else if(keyCode == DOWN) {
-    pac.setDir(0, 1);
+  if (keyCode == LEFT) {
+    //println("go left"); 
+    board.pac.setDir(-1, 0);
+  } else if (keyCode == RIGHT) {
+    //println("go right"); 
+    board.pac.setDir(1, 0);
+  } else if (keyCode == UP) {
+    //println("go up"); 
+    board.pac.setDir(0, -1);
+  } else if (keyCode == DOWN) {
+    //println("go down"); 
+    board.pac.setDir(0, 1);
   }
 }

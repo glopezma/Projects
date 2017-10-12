@@ -1,16 +1,12 @@
-class Pacman extends Agent{
-  boolean open;
-  float mouth; 
+class Pacman extends Agent {
+  PVector[] mouthPos; 
   Pacman() {
-   super();  
-   open = false;
-   mouth = radians(0); 
+    super(20*29/2, 30*20+25/2); //hard coded, I know. I'm terrible!
+    speed = 3.5; 
   }
-  
-  
-  
-  void show() {
-   fill(230, 20, 147);  
-   arc(loc.x, loc.y, 25, 25, 0, 2*PI, PIE);
+
+  void show(int x, int y) {  
+    fill(230, 20, 147);
+    ellipse(x, y, 25, 25);
   }
 }
