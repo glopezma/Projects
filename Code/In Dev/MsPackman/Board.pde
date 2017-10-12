@@ -1,11 +1,14 @@
 class Board {
-  Tile[][] tiles; 
+  Tile[][] tiles;
 
   Board() {
     tiles = new Tile[numHeight][numWidth];
     for (int i = 0; i < numHeight; i++) {
       for (int j = 0; j < numWidth; j++) {
         tiles[i][j] = new Tile(j*tileSize, i*tileSize);
+        if (i % 3 == 2 && j % 3 == 2) {
+          tiles[i][j].smallFood = true;
+        }
       }
     }
   }
@@ -15,22 +18,19 @@ class Board {
   }
 
   void show() {
-    int x = 0; 
-    int y = 0; 
-    for (int i = 0; i < numHeight; i++) {
-      for (int j = 0; j < numWidth; j++) {
+    int x = 0;
+    int y = 0;
+    for (int i = 1; i < numHeight - 1; i++) {
+      for (int j = 1; j < numWidth - 1; j++) {
         if (i == int(pac.loc.y / tileSize) && j == int(pac.loc.x / tileSize)) {
           tiles[i][j].pac = true;
-          x = j; 
+          x = j;
           y = i;
         } else {
-          tiles[i][j].pac = false; 
+          tiles[i][j].pac = false;
           tiles[i][j].show();
         }
       }
-    }
-    if(pac.loc.x < 0 || pac.loc.y < 0){
-      
     }
     tiles[y][x].show(pac);
   }
