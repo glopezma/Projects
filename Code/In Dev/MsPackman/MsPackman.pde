@@ -1,8 +1,15 @@
+int numWidth = 90; 
+int numHeight = 86; 
+int tileSize = 10; 
+int boardWidth = numWidth * tileSize;
+int boardHeight = numHeight * tileSize;
+Pacman pac; 
 Board board; 
 
 void setup() {
-  size(600, 640);
-  board = new Board(); 
+  size(900, 860);
+  board = new Board();
+  pac = new Pacman(); 
   smooth();
 }
 
@@ -15,15 +22,15 @@ void draw() {
 void keyPressed() {
   if (keyCode == LEFT) {
     //println("go left"); 
-    board.pac.setDir(-1, 0);
+    pac.setDir(-1, 0);
   } else if (keyCode == RIGHT) {
     //println("go right"); 
-    board.pac.setDir(1, 0);
+    pac.setDir(1, 0);
   } else if (keyCode == UP) {
     //println("go up"); 
-    board.pac.setDir(0, -1);
+    pac.setDir(0, -1);
   } else if (keyCode == DOWN) {
     //println("go down"); 
-    board.pac.setDir(0, 1);
+    pac.setDir(0, 1);
   }
 }

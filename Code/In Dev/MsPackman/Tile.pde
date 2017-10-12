@@ -1,15 +1,14 @@
 class Tile {
   int x; 
   int y; 
-  int tileSize = 20; 
   boolean bigFood; 
   boolean smallFood; 
   boolean wall; 
   boolean pac; 
 
   Tile(int x, int y) {
-    this.x = x * tileSize; 
-    this.y = y * tileSize; 
+    this.x = x; 
+    this.y = y; 
     bigFood = false; 
     smallFood = false; 
     wall = false; 
@@ -18,13 +17,8 @@ class Tile {
   }
 
   void show(Pacman pac) {
-    stroke(255, 255, 255, 25); 
-    strokeWeight(1); 
-    color mycolor = (wall)? color(68, 71, 76): color(0, 19, 56);  
-    fill(mycolor);
-    rect(x, y, tileSize, tileSize);
-    println("x: " + x + " y: " + y); 
-    pac.show(x, y); 
+    //println("x: " + x + " y: " + y); 
+    pac.show(x + pac.diam/4 + 2, y + pac.diam/4 + 1); 
   }
 
   void show() {

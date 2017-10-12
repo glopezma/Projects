@@ -1,27 +1,13 @@
 class Board {
-  int tileSize; 
-  int numWidth; 
-  int numHeight; 
-  int boardWidth;
-  int boardHeight; 
-  Pacman pac; 
   Tile[][] tiles; 
 
   Board() {
-    numWidth = 30; 
-    numHeight = 34; 
-    tileSize = 20; 
-
-    boardWidth = numWidth * tileSize;
-    boardHeight = numHeight * tileSize;
     tiles = new Tile[numHeight][numWidth];
     for (int i = 0; i < numHeight; i++) {
       for (int j = 0; j < numWidth; j++) {
-        tiles[i][j] = new Tile(j, i);
+        tiles[i][j] = new Tile(j*tileSize, i*tileSize);
       }
     }
-
-    pac = new Pacman();
   }
 
   void update() {
@@ -29,16 +15,23 @@ class Board {
   }
 
   void show() {
+    int x = 0; 
+    int y = 0; 
     for (int i = 0; i < numHeight; i++) {
       for (int j = 0; j < numWidth; j++) {
-        if (i == int(pac.loc.y / numHeight) && j == int(pac.loc.x / numWidth)) {
+        if (i == int(pac.loc.y / tileSize) && j == int(pac.loc.x / tileSize)) {
           tiles[i][j].pac = true;
-          tiles[i][j].show(pac);
+          x = j; 
+          y = i;
         } else {
           tiles[i][j].pac = false; 
           tiles[i][j].show();
         }
       }
     }
+    if(pac.loc.x < 0 || pac.loc.y < 0){
+      
+    }
+    tiles[y][x].show(pac);
   }
 }
