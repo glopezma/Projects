@@ -3,6 +3,8 @@ import processing.data.*;
 import processing.event.*; 
 import processing.opengl.*; 
 
+import controlP5.*; 
+
 import java.util.HashMap; 
 import java.util.ArrayList; 
 import java.io.File; 
@@ -14,35 +16,59 @@ import java.io.IOException;
 
 public class MsPackman extends PApplet {
 
+
+
+ControlP5 cp5;
 int score = 0;
-int numWidth = 90;
+int numWidth = 89;
 int numHeight = 86;
 int tileSize = 10;
 int boardWidth = numWidth * tileSize;
 int boardHeight = numHeight * tileSize;
+
+boolean menu = false;
+
 Pacman pac;
 Board board;
+
+BufferedReader reader;
+PrintWriter writer;
 
 public void setup() {
   
   board = new Board();
   pac = new Pacman();
-  
+
+  // writer = createWriter("board.txt");
+  // reader = createReader("board.txt");
+
+  cp5 = new ControlP5(this);
 }
 
 public void draw() {
   background(51);
-  board.update();
-  board.show();
+  if (menu) {
+    menu();
+  } else {
+    board.update();
+    board.show();
+  }
+}
+
+public void menu() {
+  background(155);
+  fill(255, 0, 0);
+  stroke(0);
+  strokeWeight(2);
+  rect(5, 5, 50, 50);
+  fill(0);
+  strokeWeight(0);
+  textSize(50);
+  text("X", 15, 50);
 }
 
 public void keyPressed() {
   if (keyCode == LEFT) {
-    // int xpos = pac.loc.x; 
-    // if(xpos < 0) {
-    //   xpos = 0;
-    // }
-    // if(xpos >= )
     pac.direction = "left";
     pac.setDir(-1, 0);
   } else if (keyCode == RIGHT) {
@@ -99,30 +125,25 @@ class Board {
   }
 
   public void update() {
-    int x;
-    int y;
+    int x = PApplet.parseInt(pac.loc.x / tileSize);
+    int y = PApplet.parseInt(pac.loc.y / tileSize);
+
+    posCorrection();
+
     if (pac.direction == "up") {
-      x = PApplet.parseInt(pac.loc.x / tileSize);
-      y = PApplet.parseInt(pac.loc.y / tileSize) - 2;
-      if (inBounds(x, y) && !tiles[y][x].wall) {
+      if (inBounds(x, y) && !tiles[y-2][x].wall) {
         pac.move();
       }
     } else if (pac.direction == "down") {
-      x = PApplet.parseInt(pac.loc.x / tileSize);
-      y = PApplet.parseInt(pac.loc.y / tileSize) + 2;
-      if (inBounds(x, y) && !tiles[y][x].wall) {
+      if (inBounds(x, y) && !tiles[y+2][x].wall) {
         pac.move();
       }
     } else if (pac.direction == "right") {
-      x = PApplet.parseInt(pac.loc.x / tileSize) + 2;
-      y = PApplet.parseInt(pac.loc.y / tileSize);
-      if (inBounds(x, y) && !tiles[y][x].wall) {
+      if (inBounds(x, y) && !tiles[y][x+2].wall) {
         pac.move();
       }
     } else if (pac.direction == "left") {
-      x = PApplet.parseInt(pac.loc.x / tileSize) - 2;
-      y = PApplet.parseInt(pac.loc.y / tileSize);
-      if (inBounds(x, y) && !tiles[y][x].wall) {
+      if (inBounds(x, y) && !tiles[y][x-2].wall) {
         pac.move();
       }
     }
@@ -145,6 +166,21 @@ class Board {
       }
     }
     tiles[y][x].show(pac);
+  }
+
+  public void posCorrection() {
+    int x = PApplet.parseInt(pac.loc.x / tileSize);
+    int y = PApplet.parseInt(pac.loc.y / tileSize);
+    
+    if (tiles[y-1][x].wall) {
+      pac.loc.y++;
+    } else if (tiles[y+1][x].wall) {
+      pac.loc.y--;
+    } else if (tiles[y][x+1].wall) {
+      pac.loc.x--;
+    } else if (tiles[y][x-1].wall) {
+      pac.loc.x++;
+    }
   }
 }
 class Pacman extends Agent {
@@ -238,7 +274,7 @@ class Tile {
     }
   }
 }
-  public void settings() {  size(900, 860);  smooth(); }
+  public void settings() {  size(890, 860); }
   static public void main(String[] passedArgs) {
     String[] appletArgs = new String[] { "--present", "--window-color=#666666", "--stop-color=#cccccc", "MsPackman" };
     if (passedArgs != null) {

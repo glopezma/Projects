@@ -14,30 +14,25 @@ class Board {
   }
 
   void update() {
-    int x;
-    int y;
+    int x = int(pac.loc.x / tileSize);
+    int y = int(pac.loc.y / tileSize);
+
+    posCorrection();
+
     if (pac.direction == "up") {
-      x = int(pac.loc.x / tileSize);
-      y = int(pac.loc.y / tileSize) - 2;
-      if (inBounds(x, y) && !tiles[y][x].wall) {
+      if (inBounds(x, y) && !tiles[y-2][x].wall) {
         pac.move();
       }
     } else if (pac.direction == "down") {
-      x = int(pac.loc.x / tileSize);
-      y = int(pac.loc.y / tileSize) + 2;
-      if (inBounds(x, y) && !tiles[y][x].wall) {
+      if (inBounds(x, y) && !tiles[y+2][x].wall) {
         pac.move();
       }
     } else if (pac.direction == "right") {
-      x = int(pac.loc.x / tileSize) + 2;
-      y = int(pac.loc.y / tileSize);
-      if (inBounds(x, y) && !tiles[y][x].wall) {
+      if (inBounds(x, y) && !tiles[y][x+2].wall) {
         pac.move();
       }
     } else if (pac.direction == "left") {
-      x = int(pac.loc.x / tileSize) - 2;
-      y = int(pac.loc.y / tileSize);
-      if (inBounds(x, y) && !tiles[y][x].wall) {
+      if (inBounds(x, y) && !tiles[y][x-2].wall) {
         pac.move();
       }
     }
@@ -60,5 +55,20 @@ class Board {
       }
     }
     tiles[y][x].show(pac);
+  }
+
+  void posCorrection() {
+    int x = int(pac.loc.x / tileSize);
+    int y = int(pac.loc.y / tileSize);
+    
+    if (tiles[y-1][x].wall) {
+      pac.loc.y++;
+    } else if (tiles[y+1][x].wall) {
+      pac.loc.y--;
+    } else if (tiles[y][x+1].wall) {
+      pac.loc.x--;
+    } else if (tiles[y][x-1].wall) {
+      pac.loc.x++;
+    }
   }
 }

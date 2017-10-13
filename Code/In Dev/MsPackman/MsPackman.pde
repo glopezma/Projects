@@ -1,32 +1,47 @@
-int score = 0;
-int numWidth = 90;
-int numHeight = 86;
-int tileSize = 10;
-int boardWidth = numWidth * tileSize;
-int boardHeight = numHeight * tileSize;
-Pacman pac;
-Board board;
+import controlP5.*;
+import java.util.*;
+import java.io.File;
 
 void setup() {
-  size(900, 860);
+  size(890, 860);
+  score = 0;
+  numWidth = 89;
+  numHeight = 86;
+  tileSize = 10;
+  boardWidth = numWidth * tileSize;
+  boardHeight = numHeight * tileSize;
+  folder = new java.io.File(dataPath(""));
+  fileNames = folder.list();
+
+  printArray(fileNames);
+
   board = new Board();
   pac = new Pacman();
-  smooth();
+  // writer = createWriter("board.txt");
+  // reader = createReader("board.txt");
+
+  cp5 = new ControlP5(this);
+  cp5.setAutoDraw(false); 
+  cp5.addScrollableList("dropdown")
+     .setPosition(100, 100)
+     .setSize(200, 100)
+     .setBarHeight(20)
+     .setItemHeight(20)
+     .addItems(fileNames);
 }
 
 void draw() {
   background(51);
-  board.update();
-  board.show();
+  if (menu) {
+    menu();
+  } else {
+    board.update();
+    board.show();
+  }
 }
 
 void keyPressed() {
   if (keyCode == LEFT) {
-    // int xpos = pac.loc.x; 
-    // if(xpos < 0) {
-    //   xpos = 0;
-    // }
-    // if(xpos >= )
     pac.direction = "left";
     pac.setDir(-1, 0);
   } else if (keyCode == RIGHT) {
@@ -39,8 +54,4 @@ void keyPressed() {
     pac.setDir(0, 1);
     pac.direction = "down";
   }
-}
-
-boolean inBounds(int x, int y) {
-  return (x >= 0 && x < numWidth && y >= 0 && y < numHeight);
 }
