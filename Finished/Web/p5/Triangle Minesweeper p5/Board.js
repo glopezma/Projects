@@ -4,6 +4,7 @@ function Board() {
   this.tileSize = 40;
   this.boardWidth = 2 * (this.boardSize / this.tileSize) - 1;
   this.boardHeight = (this.boardSize / this.tileSize);
+  this.lose = false;
 
   this.tiles = new Array(this.boardHeight);
   for (var i = 0; i < this.boardHeight; i++) {
@@ -61,9 +62,16 @@ Board.prototype.action = function() {
   for (var i = 0; i < this.boardHeight; i++) {
     for (var j = 0; j < this.boardWidth; j++) {
       if (mouseButton == LEFT) {
-        if (this.tiles[i][j].click()) {
+        if (this.lose) {
+          console.log("reset the game!");
+          this.resetGame();
+          break;
+        } else if (this.tiles[i][j].click()) {
+          console.log("clicked. this.lose = " + this.lose);
           if (this.tiles[i][j].mine) {
-            this.resetGame();
+            this.lose = true;
+            console.log("this.lose = " + this.lose);
+            return;
           } else {
             this.lookAround(i, j);
           }
@@ -98,7 +106,7 @@ Board.prototype.newGame = function() {
     // console.log(i + " " + j);
     if (ran < (this.boardWidth * this.boardHeight) && !this.tiles[i][j].space) {
       this.tiles[i][j].space = true;
-      this.tiles[i][j].mine = true; 
+      this.tiles[i][j].mine = true;
       if (j - 1 >= 0) { //left
         if (i - 1 >= 0) { //left top
           this.tiles[i - 1][j - 1].counter++;
@@ -154,6 +162,7 @@ Board.prototype.resetGame = function() {
       this.tiles[i][j].resetTile();
     }
   }
+  this.lose = false;
   this.newGame();
 }
 
