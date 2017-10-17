@@ -1,6 +1,6 @@
 function Board() {
   this.boardSize = 640;
-  this.numMines = 45;
+  this.numMines = 40;
   this.tileSize = 40;
   this.boardWidth = 2 * (this.boardSize / this.tileSize) - 1;
   this.boardHeight = (this.boardSize / this.tileSize);
@@ -59,25 +59,21 @@ Board.prototype.showEnd = function() {
 }
 
 Board.prototype.action = function() {
-  for (var i = 0; i < this.boardHeight; i++) {
-    for (var j = 0; j < this.boardWidth; j++) {
-      if (mouseButton == LEFT) {
-        if (this.lose) {
-          console.log("reset the game!");
-          this.resetGame();
-          break;
-        } else if (this.tiles[i][j].click()) {
-          console.log("clicked. this.lose = " + this.lose);
-          if (this.tiles[i][j].mine) {
-            this.lose = true;
-            console.log("this.lose = " + this.lose);
-            return;
-          } else {
-            this.lookAround(i, j);
+  if (!this.lose) {
+    for (var i = 0; i < this.boardHeight; i++) {
+      for (var j = 0; j < this.boardWidth; j++) {
+        if (mouseButton == LEFT) {
+          if (this.tiles[i][j].click()) {
+            if (this.tiles[i][j].mine) {
+              this.lose = true;
+              return;
+            } else {
+              this.lookAround(i, j);
+            }
           }
+        } else if (mouseButton == RIGHT) {
+          this.tiles[i][j].cover();
         }
-      } else if (mouseButton == RIGHT) {
-        this.tiles[i][j].cover();
       }
     }
   }
