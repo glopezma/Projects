@@ -1,0 +1,25 @@
+Welcome to Pac-Man the Processing version made by Gabe Lopez
+Version 0.01
+10/18/2017
+
+First step
+  Stage Creator:
+  Open the stage creator program. This will open an empty grid with a dark blue background.
+  hold your mouse over the tile you want to set and push the corresponding keys for each action:
+
+  b -- create big food
+  s -- create small food
+  w -- create a wall
+  p -- starting point for Pacman
+  backspace -- remove everything from tile
+
+  There's a wall around the border that if removed and pacman escapes the bounds of the game, he will mearly appear on the other side.
+
+  MsPackman:
+  open the game and the level you created will be imported as the map. This will then allow you to the game. It is as you probably assume. arrows make you move in that direction. Normal Pacman rules apply.
+
+  Have fun!
+
+See other things made by Gabe here:
+https://github.com/glopezma
+https://codepen.io/glopezma

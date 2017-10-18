@@ -3,8 +3,6 @@ import processing.data.*;
 import processing.event.*; 
 import processing.opengl.*; 
 
-import controlP5.*; 
-
 import java.util.HashMap; 
 import java.util.ArrayList; 
 import java.io.File; 
@@ -16,55 +14,27 @@ import java.io.IOException;
 
 public class MsPackman extends PApplet {
 
-
-
-ControlP5 cp5;
-int score = 0;
-int numWidth = 89;
-int numHeight = 86;
-int tileSize = 10;
-int boardWidth = numWidth * tileSize;
-int boardHeight = numHeight * tileSize;
-
-boolean menu = false;
-
-Pacman pac;
-Board board;
-
-BufferedReader reader;
-PrintWriter writer;
+//import controlP5.*;
+//import java.util.*;
+//import java.io.File;
 
 public void setup() {
   
+  score = 0;
+  numWidth = 89;
+  numHeight = 86;
+  tileSize = 10;
+  boardWidth = numWidth * tileSize;
+  boardHeight = numHeight * tileSize;
+
   board = new Board();
   pac = new Pacman();
-
-  // writer = createWriter("board.txt");
-  // reader = createReader("board.txt");
-
-  cp5 = new ControlP5(this);
 }
 
 public void draw() {
   background(51);
-  if (menu) {
-    menu();
-  } else {
-    board.update();
-    board.show();
-  }
-}
-
-public void menu() {
-  background(155);
-  fill(255, 0, 0);
-  stroke(0);
-  strokeWeight(2);
-  rect(5, 5, 50, 50);
-  fill(0);
-  strokeWeight(0);
-  textSize(50);
-  text("X", 15, 50);
+  board.update();
+  board.show();
 }
 
 public void keyPressed() {
@@ -83,9 +53,33 @@ public void keyPressed() {
   }
 }
 
-public boolean inBounds(int x, int y) {
-  return (x >= 0 && x < numWidth && y >= 0 && y < numHeight);
-}
+//folder = new java.io.File(dataPath(""));
+//  fileNames = folder.list();
+
+  //printArray(fileNames);
+
+  // writer = createWriter("board.txt");
+  // reader = createReader("board.txt");
+
+  //cp5 = new ControlP5(this);
+  //cp5.setAutoDraw(false);
+  //cp5.addScrollableList("dropdown")
+  //   .setPosition(100, 100)
+  //   .setSize(200, 100)
+  //   .setBarHeight(20)
+  //   .setItemHeight(20)
+  //   .addItems(fileNames);
+
+
+  // void draw() {
+  //   background(51);
+  //   // if (menu) {
+  //   //   menu();
+  //   // } else {
+  //     board.update();
+  //     board.show();
+  //   // }
+  // }
 class Agent {
   PVector loc;
   PVector dir;
@@ -183,6 +177,55 @@ class Board {
     }
   }
 }
+// ControlP5 cp5;
+// java.io.File folder;
+// String[] fileNames;
+
+// boolean menu = false;
+// BufferedReader reader;
+// PrintWriter writer;
+int score;
+int numWidth;
+int numHeight;
+int tileSize;
+int boardWidth;
+int boardHeight;
+
+Pacman pac;
+Board board;
+
+public void menu() {
+  background(155);
+  fill(255, 0, 0);
+  stroke(0);
+  strokeWeight(2);
+  rect(5, 5, 50, 50);
+  fill(0);
+  strokeWeight(0);
+  textSize(50);
+  text("X", 15, 50);
+}
+
+// This function returns all the files in a directory as an array of Strings
+// String[] listFileNames(String dir) {
+//   File file = new File(dir);
+//   if (file.isDirectory()) {
+//     String names[] = file.list();
+//     return names;
+//   } else {
+//     // If it's not a directory
+//     return null;
+//   }
+// }
+
+public boolean inBounds(int x, int y) {
+  return (x >= 0 && x < numWidth && y >= 0 && y < numHeight);
+}
+
+// void dropdown(int n) {
+//   println(n, cp5.get(ScrollableList.class, "dropdown").getItem(n));
+//
+// }
 class Pacman extends Agent {
   int mouthPos;
   int diam;
