@@ -40,20 +40,26 @@ Tile.prototype.show = function() {
       fill(51);
       ellipse(this.p2.x - 2, (this.p1.y + this.p2.y + this.p3.y) / 3, tileSize / 4, tileSize / 4);
     } else {
+      strokeWeight(2);
       if (this.counter == 0) {
         fill(255);
+        stroke(255);
       } else if (this.counter == 1) {
         fill(0, 0, 255);
+        stroke(0, 0, 255);
       } else if (this.counter == 2) {
         fill(0, 255, 0);
+        stroke(56, 169, 58);
       } else if (this.counter == 3) {
-        fill(255, 255, 0);
+        fill(211, 222, 39);
+        stroke(167, 173, 62);
       } else if (this.counter == 4) {
         fill(255, 75, 0);
+        stroke(255, 75, 0);
       } else if (this.counter > 4) {
         fill(255, 0, 0);
+        stroke(255, 0, 0);
       }
-      noStroke(); 
       text(this.counter, this.p2.x - 2, (this.p1.y + this.p2.y + this.p3.y) / 3);
     }
   } else {
