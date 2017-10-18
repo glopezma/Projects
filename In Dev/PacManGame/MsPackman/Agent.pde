@@ -1,3 +1,5 @@
+// I wrote this class as a parent to both ghost and pacman. They both inherit movement and speed and generic things like that. 
+
 class Agent {
   PVector loc;
   PVector dir;
@@ -10,7 +12,7 @@ class Agent {
     dir = new PVector(0, 0);
     animationTimer = millis();
     speed = 1;
-    direction = "right"; 
+    direction = "right";
   }
 
   void setDir(int x, int y) {
