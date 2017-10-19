@@ -62,8 +62,9 @@ void saveGame() {
   for (int i = 0; i < numHeight; i++) {
     for (int j = 0; j < numWidth; j++) {
       tile = new JSONObject();
-      loc = i*numWidth + numWidth;
-
+      loc = i*numWidth + j;
+      
+      tile.setInt("location", loc); 
       tile.setBoolean("bigFood", board.tiles[i][j].bigFood);
       tile.setBoolean("smallFood", board.tiles[i][j].smallFood);
       tile.setBoolean("wall", board.tiles[i][j].wall);
