@@ -31,7 +31,6 @@ class Board {
         if (tiles[i][j].inTile(mouseY, mouseX)) { //check each tile to see if the mouse is hovering over it.
           //The next part is just seeing which key was actually pressed and then setting that tile appropriately
           if (key == 's') {
-<<<<<<< HEAD
             tiles[i][j].resetTile();
             tiles[i][j].smallFood = true;
           } else if (key == 'b') {
@@ -43,15 +42,6 @@ class Board {
           } else if (key == 'p') {
             removePac();
             tiles[i][j].resetTile();
-=======
-            tiles[i][j].smallFood = true;
-          } else if (key == 'b') {
-            tiles[i][j].bigFood = true;
-          } else if (key == 'w') {
-            tiles[i][j].wall = true;
-          } else if (key == 'p') {
-            removePac();
->>>>>>> ba12e702e87e3449c400e16c2ce5ab023d6321ae
             tiles[i][j].pac = true;
           } else if (keyCode == BACKSPACE) {
             tiles[i][j].resetTile();

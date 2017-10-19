@@ -93,18 +93,18 @@ boolean inBounds(int x, int y) {
 //
 // void setup() {
 //
-  // values = new JSONArray();
-  //
-  // for (int i = 0; i < species.length; i++) {
-  //
-  //   JSONObject animal = new JSONObject();
-  //
-  //   animal.setInt("id", i);
-  //   animal.setString("species", species[i]);
-  //   animal.setString("name", names[i]);
-  //
-  //   values.setJSONObject(i, animal);
-  // }
-  //
-  // saveJSONArray(values, "data/new.json");
+// values = new JSONArray();
+//
+// for (int i = 0; i < species.length; i++) {
+//
+//   JSONObject animal = new JSONObject();
+//
+//   animal.setInt("id", i);
+//   animal.setString("species", species[i]);
+//   animal.setString("name", names[i]);
+//
+//   values.setJSONObject(i, animal);
+// }
+//
+// saveJSONArray(values, "data/new.json");
 // }

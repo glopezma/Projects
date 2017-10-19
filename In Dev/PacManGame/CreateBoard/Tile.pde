@@ -40,16 +40,12 @@ class Tile {
       }
     } //if pacman is in that tile, draw him <-- this makes sense in the real game. It's kind of just here because I didn't delete it.
     if (pac) {
-<<<<<<< HEAD
       fill(230, 20, 147);
       ellipse(x + 18.0/4 + 2, y + 18.0/4 + 1, 18, 18);
-=======
-     ellipse(x + 18.0/4 + 2, y + 18.0/4 + 1, 18, 18);
->>>>>>> ba12e702e87e3449c400e16c2ce5ab023d6321ae
     }
   }
 
-  //Checks if some coordinates are in a tile (called with y and x being my mouseX and mouseY)
+  // Checks if some coordinates are in a tile (called with y and x being my mouseX and mouseY)
   boolean inTile(float y, float x) {
     return (x > this.x && x < this.x + tileSize && y > this.y && y < this.y + tileSize);
   }
