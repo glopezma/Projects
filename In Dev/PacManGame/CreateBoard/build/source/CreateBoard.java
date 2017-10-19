@@ -23,6 +23,7 @@ int numHeight;    //number of tiles vertically
 int tileSize;     //size of each tile
 int boardWidth;   //the window width
 int boardHeight;  //the window Height
+String save = "Save";
 
 JSONArray output;
 
@@ -49,7 +50,7 @@ public void draw() {
   rect(0, 0, width, 40);
   fill(255);
   textSize(50);
-  text("Save", width / 2 - 50, 38);
+  text(save, width / 2 - 50, 38);
 }
 
 //This is the even listener for key strokes.
@@ -57,10 +58,46 @@ public void keyPressed() {
   board.action();
 }
 
+public void mouseClicked() {
+  if (mouseX >= 0 && mouseX <= width && mouseY >= 0 && mouseY <= 50 && mouseButton == LEFT) {
+    saveGame();
+    save = "Success";
+  }
+}
+
 //this is just a global function that anything can call
 //checks if an x and y variable are within the scope of the board.
 public boolean inBounds(int x, int y) {
   return (x >= 0 && x < numWidth && y >= 40 && y < numHeight);
+}
+
+public void saveGame() {
+  int loc;
+
+  for (int i = 0; i < numHeight; i++) {
+    for (int j = 0; j < numWidth; j++) {
+      JSONObject tile = new JSONObject();
+      loc = i*numWidth + numWidth;
+
+      tile.setBoolean("bigFood", loc);
+      tile.setBoolean("smallFood", loc);
+      tile.setBoolean("wall", loc);
+      tile.setBoolean("pac", loc);
+    }
+    output.setJSONObject(i, loc);
+  }
+  // for (int i = 0; i < species.length; i++) {
+  //
+  //   JSONObject animal = new JSONObject();
+  //
+  //   animal.setInt("id", i);
+  //   animal.setString("species", species[i]);
+  //   animal.setString("name", names[i]);
+  //
+  //   values.setJSONObject(i, animal);
+  // }
+  //
+  // saveJSONArray(values, "data/new.json");
 }
 
 
@@ -109,20 +146,20 @@ public boolean inBounds(int x, int y) {
 //
 // void setup() {
 //
-  // values = new JSONArray();
-  //
-  // for (int i = 0; i < species.length; i++) {
-  //
-  //   JSONObject animal = new JSONObject();
-  //
-  //   animal.setInt("id", i);
-  //   animal.setString("species", species[i]);
-  //   animal.setString("name", names[i]);
-  //
-  //   values.setJSONObject(i, animal);
-  // }
-  //
-  // saveJSONArray(values, "data/new.json");
+// values = new JSONArray();
+//
+// for (int i = 0; i < species.length; i++) {
+//
+//   JSONObject animal = new JSONObject();
+//
+//   animal.setInt("id", i);
+//   animal.setString("species", species[i]);
+//   animal.setString("name", names[i]);
+//
+//   values.setJSONObject(i, animal);
+// }
+//
+// saveJSONArray(values, "data/new.json");
 // }
 //This is the board class. It contains the grid of tiles
 class Board {
@@ -228,7 +265,7 @@ class Tile {
     } //if pacman is in that tile, draw him <-- this makes sense in the real game. It's kind of just here because I didn't delete it.
     if (pac) {
       fill(230, 20, 147);
-      ellipse(x + 18.0f/4 + 2, y + 18.0f/4 + 1, 18, 18);
+      rect(x, y, tileSize, tileSize);
     }
   }
 

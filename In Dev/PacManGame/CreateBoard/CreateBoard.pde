@@ -7,6 +7,7 @@ int numHeight;    //number of tiles vertically
 int tileSize;     //size of each tile
 int boardWidth;   //the window width
 int boardHeight;  //the window Height
+String save = "Save";
 
 JSONArray output;
 
@@ -33,7 +34,7 @@ void draw() {
   rect(0, 0, width, 40);
   fill(255);
   textSize(50);
-  text("Save", width / 2 - 50, 38);
+  text(save, width / 2 - 50, 38);
 }
 
 //This is the even listener for key strokes.
@@ -41,10 +42,38 @@ void keyPressed() {
   board.action();
 }
 
+void mouseClicked() {
+  if (mouseX >= 0 && mouseX <= width && mouseY >= 0 && mouseY <= 50 && mouseButton == LEFT) {
+    saveGame();
+    save = "Success";
+  }
+}
+
 //this is just a global function that anything can call
 //checks if an x and y variable are within the scope of the board.
 boolean inBounds(int x, int y) {
   return (x >= 0 && x < numWidth && y >= 40 && y < numHeight);
+}
+
+void saveGame() {
+  int loc;
+  JSONObject tile;
+
+  for (int i = 0; i < numHeight; i++) {
+    for (int j = 0; j < numWidth; j++) {
+      tile = new JSONObject();
+      loc = i*numWidth + numWidth;
+
+      tile.setBoolean("bigFood", board.tiles[i][j].bigFood);
+      tile.setBoolean("smallFood", board.tiles[i][j].smallFood);
+      tile.setBoolean("wall", board.tiles[i][j].wall);
+      tile.setBoolean("pac", board.tiles[i][j].pac);
+
+      output.setJSONObject(loc, tile);
+    }
+  }
+
+  saveJSONArray(output, "../MsPackman/data/boardSetup.json");
 }
 
 
