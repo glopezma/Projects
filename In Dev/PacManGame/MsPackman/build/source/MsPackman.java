@@ -17,6 +17,15 @@ public class MsPackman extends PApplet {
 //import controlP5.*;
 //import java.util.*;
 //import java.io.File;
+int score;
+int numWidth;
+int numHeight;
+int tileSize;
+int boardWidth;
+int boardHeight;
+
+Pacman pac;
+Board board;
 
 public void setup() {
   
@@ -80,6 +89,8 @@ public void keyPressed() {
   //     board.show();
   //   // }
   // }
+// I wrote this class as a parent to both ghost and pacman. They both inherit movement and speed and generic things like that. 
+
 class Agent {
   PVector loc;
   PVector dir;
@@ -92,7 +103,7 @@ class Agent {
     dir = new PVector(0, 0);
     animationTimer = millis();
     speed = 1;
-    direction = "right"; 
+    direction = "right";
   }
 
   public void setDir(int x, int y) {
@@ -184,27 +195,27 @@ class Board {
 // boolean menu = false;
 // BufferedReader reader;
 // PrintWriter writer;
-int score;
-int numWidth;
-int numHeight;
-int tileSize;
-int boardWidth;
-int boardHeight;
+// int score;
+// int numWidth;
+// int numHeight;
+// int tileSize;
+// int boardWidth;
+// int boardHeight;
+//
+// Pacman pac;
+// Board board;
 
-Pacman pac;
-Board board;
-
-public void menu() {
-  background(155);
-  fill(255, 0, 0);
-  stroke(0);
-  strokeWeight(2);
-  rect(5, 5, 50, 50);
-  fill(0);
-  strokeWeight(0);
-  textSize(50);
-  text("X", 15, 50);
-}
+// void menu() {
+//   background(155);
+//   fill(255, 0, 0);
+//   stroke(0);
+//   strokeWeight(2);
+//   rect(5, 5, 50, 50);
+//   fill(0);
+//   strokeWeight(0);
+//   textSize(50);
+//   text("X", 15, 50);
+// }
 
 // This function returns all the files in a directory as an array of Strings
 // String[] listFileNames(String dir) {

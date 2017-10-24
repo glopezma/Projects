@@ -73,31 +73,24 @@ public boolean inBounds(int x, int y) {
 
 public void saveGame() {
   int loc;
+  JSONObject tile;
 
   for (int i = 0; i < numHeight; i++) {
     for (int j = 0; j < numWidth; j++) {
-      JSONObject tile = new JSONObject();
-      loc = i*numWidth + numWidth;
+      tile = new JSONObject();
+      loc = i*numWidth + j;
+      
+      tile.setInt("location", loc); 
+      tile.setBoolean("bigFood", board.tiles[i][j].bigFood);
+      tile.setBoolean("smallFood", board.tiles[i][j].smallFood);
+      tile.setBoolean("wall", board.tiles[i][j].wall);
+      tile.setBoolean("pac", board.tiles[i][j].pac);
 
-      tile.setBoolean("bigFood", loc);
-      tile.setBoolean("smallFood", loc);
-      tile.setBoolean("wall", loc);
-      tile.setBoolean("pac", loc);
+      output.setJSONObject(loc, tile);
     }
-    output.setJSONObject(i, loc);
   }
-  // for (int i = 0; i < species.length; i++) {
-  //
-  //   JSONObject animal = new JSONObject();
-  //
-  //   animal.setInt("id", i);
-  //   animal.setString("species", species[i]);
-  //   animal.setString("name", names[i]);
-  //
-  //   values.setJSONObject(i, animal);
-  // }
-  //
-  // saveJSONArray(values, "data/new.json");
+
+  saveJSONArray(output, "../MsPackman/data/boardSetup.json");
 }
 
 
